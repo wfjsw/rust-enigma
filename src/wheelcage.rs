@@ -12,12 +12,15 @@ impl Mutator for WheelCage {
         let mut output = input;
         for &(ref wheel, offset) in self.wheels.iter() {
             output = wheel.mutate_with_offset(output, offset as usize, true);
+            #[cfg(debug_assertions)]
             println!("Wheel: {}", output);
         }
         output = self.reflector.mutate(output);
+        #[cfg(debug_assertions)]
         println!("Reflector: {}", output);
         for &(ref wheel, offset) in self.wheels.iter().rev() {
             output = wheel.mutate_with_offset(output, offset as usize, false);
+            #[cfg(debug_assertions)]
             println!("Wheel: {}", output);
         }
         self.rotate();
